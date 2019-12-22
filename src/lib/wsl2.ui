@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>form</class>
  <widget class="QWidget" name="form">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -9,6 +12,18 @@
     <width>678</width>
     <height>447</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>678</width>
+    <height>447</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>678</width>
+    <height>447</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>WSL2端口自动转发器</string>
@@ -46,6 +61,12 @@
    </property>
    <property name="text">
     <string>获取WSL2当前IP</string>
+   </property>
+   <property name="default">
+    <bool>false</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="port_info">
