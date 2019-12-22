@@ -1,4 +1,4 @@
-# wsl2-auto-port-forward-python
+# WSL2端口自动转发脚本
 
 ### 打包
 
