@@ -76,7 +76,6 @@ class WinCmd:
         """
         cmd = self.POWER_SHELL
         cmd += ' netsh interface portproxy delete v4tov4 listenport=' + wsl_port + ' listenaddress=' + addr
-        print(cmd)
         return popen(cmd)
 
     def port_reset(self):
@@ -125,5 +124,4 @@ class WinCmd:
         wall_name = self.FireWallRuleDisplayName + wall_type + wsl_port
         cmd = self.POWER_SHELL
         cmd += " Remove-NetFireWallRule -DisplayName '" + wall_name + "'"
-        print(cmd)
         return popen(cmd)
