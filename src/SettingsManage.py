@@ -17,7 +17,7 @@ class SettingsManage:
 
     # 默认配置数据
     __settings = {
-        "ports": [],
+        "ports": ["80"],
         "fire_wall_open": True,
         "fire_wall_close": True
     }

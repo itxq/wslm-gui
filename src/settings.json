@@ -1,0 +1,7 @@
+{
+  "ports"          : [
+    "80"
+  ],
+  "fire_wall_open" : true,
+  "fire_wall_close": true
+}
