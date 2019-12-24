@@ -51,7 +51,7 @@
    <property name="geometry">
     <rect>
      <x>530</x>
-     <y>20</y>
+     <y>110</y>
      <width>111</width>
      <height>31</height>
     </rect>
@@ -73,7 +73,7 @@
    <property name="geometry">
     <rect>
      <x>530</x>
-     <y>110</y>
+     <y>180</y>
      <width>111</width>
      <height>31</height>
     </rect>
@@ -105,7 +105,7 @@
    <property name="geometry">
     <rect>
      <x>530</x>
-     <y>200</y>
+     <y>250</y>
      <width>111</width>
      <height>31</height>
     </rect>
@@ -121,7 +121,7 @@
    <property name="geometry">
     <rect>
      <x>530</x>
-     <y>300</y>
+     <y>320</y>
      <width>111</width>
      <height>31</height>
     </rect>
@@ -193,6 +193,28 @@
     <bool>true</bool>
    </property>
    <property name="tristate">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="save_settings">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>40</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="text">
+    <string>保存配置</string>
+   </property>
+   <property name="default">
+    <bool>false</bool>
+   </property>
+   <property name="flat">
     <bool>false</bool>
    </property>
   </widget>
