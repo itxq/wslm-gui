@@ -6,7 +6,7 @@
 #       修改时间: 
 #       copyright (c) 2016 - 2019 mail@xqitw.cn
 # ==================================================================
-
+from os.path import abspath, dirname, join
 from os import popen
 from re import search
 
@@ -31,7 +31,11 @@ class WinCmd:
     """
 
     def __init__(self):
+        self.scriptDir = dirname(abspath(__file__))
+        print(self.scriptDir)
         self.BASH_EXE = 'bash.exe'
+        self.WSCRIPT_EXE = r'C:\Windows\System32\wscript.exe'
+        self.WSL_BAT_PATH = join(self.scriptDir, 'script/wsl.vbs')
         self.POWER_SHELL = 'PowerShell.exe'
         self.FireWallRuleOut = 'Outbound'
         self.FireWallRuleIn = 'Inbound'
@@ -50,6 +54,15 @@ class WinCmd:
         except AttributeError:
             wsl_ip = 'IP查询失败'
         return wsl_ip
+
+    def start_wsl(self):
+        """
+        启动wsl子系统
+        :return:
+        """
+        cmd = self.WSCRIPT_EXE
+        cmd += ' ' + self.WSL_BAT_PATH + ' wsl'
+        return popen(cmd)
 
     def port_add(self, wsl_ip, wsl_port, addr='0.0.0.0'):
         """
