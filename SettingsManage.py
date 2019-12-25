@@ -17,9 +17,10 @@ class SettingsManage:
 
     # 默认配置数据
     __settings = {
-        "ports": [],
-        "fire_wall_open": True,
-        "fire_wall_close": True
+        'auto_start_wsl': False,
+        'fire_wall_open': False,
+        'fire_wall_close': False,
+        'ports': []
     }
 
     def __init__(self):
