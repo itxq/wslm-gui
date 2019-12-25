@@ -27,7 +27,7 @@ class SettingsManage:
         初始化
         """
         self.settingsDir = dirname(abspath(__file__))
-        self.settingsFile = join(self.settingsDir, 'lib/settings.json')
+        self.settingsFile = join(self.settingsDir, 'data/settings.json')
         self.__get_file_content()
 
     def set(self, name, value):
