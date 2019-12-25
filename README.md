@@ -3,7 +3,6 @@
 ### 打包
 
 ```
-# 进入 src 目录后执行
 pyinstaller WSL2AutoPortForward.py --noconsole --hidden-import PySide2.QtXml --icon="lib/logo.ico"
 ```
 
