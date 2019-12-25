@@ -32,7 +32,6 @@ class WinCmd:
 
     def __init__(self):
         self.scriptDir = dirname(abspath(__file__))
-        print(self.scriptDir)
         self.BASH_EXE = 'bash.exe'
         self.WSCRIPT_EXE = r'C:\Windows\System32\wscript.exe'
         self.WSL_BAT_PATH = join(self.scriptDir, 'script/wsl.vbs')
@@ -138,3 +137,14 @@ class WinCmd:
         cmd = self.POWER_SHELL
         cmd += " Remove-NetFireWallRule -DisplayName '" + wall_name + "'"
         return popen(cmd)
+
+    def save_bat_script(self, content):
+        f = open(join(self.scriptDir, 'script/wsl.bat'), 'w', encoding='utf8')
+        f.write(content)
+        f.close()
+
+    def get_bat_script(self):
+        f = open(join(self.scriptDir, 'script/wsl.bat'), 'r', encoding='utf8')
+        content = f.read()
+        f.close()
+        return content

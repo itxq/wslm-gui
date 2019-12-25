@@ -34,11 +34,13 @@ class WSL2AutoPortForward:
         self.ui.setWindowIcon(app_icon)
 
         # 设置选中状态
+        self.ui.auto_start_wsl.setChecked(self.__setting.get('auto_start_wsl', False))
         self.ui.fire_wall_open.setChecked(self.__setting.get('fire_wall_open', False))
         self.ui.fire_wall_close.setChecked(self.__setting.get('fire_wall_close', False))
 
         # 设置文本框的值
         self.ui.port_text.appendPlainText('\n'.join(self.__setting.get('ports', [])))
+        self.ui.bat_text.appendPlainText(self.wsl2.get_bat_script())
 
         # 按钮监听
         self.ui.get_wsl2_ip.clicked.connect(self.__get_wsl2_ip)
@@ -46,7 +48,11 @@ class WSL2AutoPortForward:
         self.ui.port_del.clicked.connect(self.__port_del)
         self.ui.port_info.clicked.connect(self.__port_info)
         self.ui.port_reset.clicked.connect(self.__port_reset)
+        self.ui.start_wsl.clicked.connect(self.__start_wsl)
         self.ui.save_settings.clicked.connect(self.__save_settings)
+
+        if self.ui.auto_start_wsl.isChecked():
+            self.__start_wsl()
 
     def __get_wsl2_ip(self):
         wsl2_ip_info = 'WSL2当前IP为：' + self.wsl2.get_wsl2_ip()
@@ -108,12 +114,34 @@ class WSL2AutoPortForward:
         self.__port_del()
         self.__port_add()
 
+    def __start_wsl(self):
+        """
+        启动wsl
+        :return:
+        """
+        self.wsl2.start_wsl()
+        self.__wsl2_auto_port_forward()
+
     def __save_settings(self):
+        """
+        保存全部配置
+        :return:
+        """
+        self.__save_bat_script()
         self.settings_manage.set('fire_wall_open', self.ui.fire_wall_open.isChecked())
         self.settings_manage.set('fire_wall_close', self.ui.fire_wall_close.isChecked())
+        self.settings_manage.set('auto_start_wsl', self.ui.auto_start_wsl.isChecked())
         self.settings_manage.set('ports', self.ui.port_text.toPlainText().splitlines())
         self.ui.result_text.clear()
         self.ui.result_text.appendPlainText('配置保存成功...')
+
+    def __save_bat_script(self):
+        """
+        保存启动脚本
+        :return:
+        """
+        content = self.ui.bat_text.toPlainText()
+        self.wsl2.save_bat_script(content)
 
 
 if __name__ == "__main__":
