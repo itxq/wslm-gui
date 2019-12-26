@@ -10,16 +10,20 @@ pyinstaller WSL2AutoPortForward.py --noconsole --hidden-import PySide2.QtXml --i
 
 + 查询WSL2当前IP
 
-![查询WSL2当前IP](./src/lib/images/4.png)
+![查询WSL2当前IP](./src/images/4.png)
 
 + 查询端口
 
-![查询端口](./src/lib/images/2.png)
+![查询端口](./src/images/2.png)
 
 + 添加端口
 
-![添加端口](./src/lib/images/1.png)
+![添加端口](./src/images/1.png)
 
 + 删除端口
 
-![删除端口](./src/lib/images/3.png)
+![删除端口](./src/images/3.png)
+
++ 保存配置信息及启动脚本
+
+![删除端口](./src/images/5.png)
