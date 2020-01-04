@@ -8,7 +8,7 @@
 # ==================================================================
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QApplication
+from PySide2.QtWidgets import QApplication, QMessageBox
 from SettingsManage import SettingsManage
 from WinCmd import WinCmd
 
@@ -127,13 +127,17 @@ class WSL2AutoPortForward:
         保存全部配置
         :return:
         """
+        # 保存脚本
         self.__save_bat_script()
+
+        # 保存配置信息
         self.settings_manage.set('fire_wall_open', self.ui.fire_wall_open.isChecked())
         self.settings_manage.set('fire_wall_close', self.ui.fire_wall_close.isChecked())
         self.settings_manage.set('auto_start_wsl', self.ui.auto_start_wsl.isChecked())
         self.settings_manage.set('ports', self.ui.port_text.toPlainText().splitlines())
-        self.ui.result_text.clear()
-        self.ui.result_text.appendPlainText('配置保存成功...')
+
+        # 保存成功提示
+        QMessageBox.information(self.ui, '系统提示', '配置保存成功!')
 
     def __save_bat_script(self):
         """
