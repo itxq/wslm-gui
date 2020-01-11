@@ -55,24 +55,33 @@ class WSL2AutoPortForward:
             self.__start_wsl()
 
     def __get_wsl2_ip(self):
-        wsl2_ip_info = 'WSL2当前IP为：' + self.wsl2.get_wsl2_ip()
-        self.ui.result_text.setPlainText(wsl2_ip_info)
+        wsl2_ip_info = self.wsl2.get_wsl2_ip()
+        if not wsl2_ip_info:
+            # 未查询到端口转发信息提示
+            QMessageBox.information(self.ui, '系统提示', '未查询到IP信息!')
+        else:
+            wsl2_ip_info = 'WSL2当前IP为：' + wsl2_ip_info
+            self.ui.result_text.setPlainText(wsl2_ip_info)
 
     def __port_add(self):
-        wsl2_ip = self.wsl2.get_wsl2_ip()
-        self.ui.result_text.clear()
-        ports = self.ui.port_text.toPlainText()
-        for port in ports.splitlines():
-            if not port.strip():
-                continue
-            self.wsl2.port_add(wsl2_ip, port)
-            self.ui.result_text.appendPlainText('>>> 添加端口：【' + port + '】...')
-            if self.ui.fire_wall_open.isChecked():
-                self.wsl2.fire_wall_rule_add(port, self.wsl2.FireWallRuleIn)
-                self.ui.result_text.appendPlainText('>>> 添加防火墙：【' + port + '】【' + self.wsl2.FireWallRuleIn + '】...')
-                self.wsl2.fire_wall_rule_add(port, self.wsl2.FireWallRuleOut)
-                self.ui.result_text.appendPlainText('>>> 添加防火墙：【' + port + '】【' + self.wsl2.FireWallRuleOut + '】...')
-        self.ui.result_text.appendPlainText('Succeed!')
+        wsl2_ip_info = self.wsl2.get_wsl2_ip()
+        if not wsl2_ip_info:
+            # 未查询到端口转发信息提示
+            QMessageBox.information(self.ui, '系统提示', '未查询到IP信息!')
+        else:
+            self.ui.result_text.clear()
+            ports = self.ui.port_text.toPlainText()
+            for port in ports.splitlines():
+                if not port.strip():
+                    continue
+                self.wsl2.port_add(wsl2_ip_info, port)
+                self.ui.result_text.appendPlainText('>>> 添加端口：【' + port + '】...')
+                if self.ui.fire_wall_open.isChecked():
+                    self.wsl2.fire_wall_rule_add(port, self.wsl2.FireWallRuleIn)
+                    self.ui.result_text.appendPlainText('>>> 添加防火墙：【' + port + '】【' + self.wsl2.FireWallRuleIn + '】...')
+                    self.wsl2.fire_wall_rule_add(port, self.wsl2.FireWallRuleOut)
+                    self.ui.result_text.appendPlainText('>>> 添加防火墙：【' + port + '】【' + self.wsl2.FireWallRuleOut + '】...')
+            self.ui.result_text.appendPlainText('Succeed!')
 
     def __port_del(self):
         self.ui.result_text.clear()
@@ -92,9 +101,11 @@ class WSL2AutoPortForward:
 
     def __port_info(self):
         info_str = self.wsl2.port_info(True)
-        if not info_str.strip():
-            info_str = '未查询到端口转发信息'
-        self.ui.result_text.setPlainText(info_str)
+        if not info_str:
+            # 未查询到端口转发信息提示
+            QMessageBox.information(self.ui, '系统提示', '未查询到端口转发信息!')
+        else:
+            self.ui.result_text.setPlainText(info_str)
 
     def __port_del_one(self, port):
         self.wsl2.port_del(port)

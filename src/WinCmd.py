@@ -11,20 +11,6 @@ from os import popen
 from re import search
 
 
-def port_info_to_list(info_str):
-    info = []
-    pattern = r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(.*?)(\d+)(.*?)(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})"
-    for line in info_str.splitlines():
-        line_info = search(pattern, line)
-        if line_info:
-            info.append({
-                'addr': line_info.group(1),
-                'port': line_info.group(3),
-                'ip': line_info.group(5),
-            })
-    return info
-
-
 class WinCmd:
     """
     WSL2 端口转发处理类
@@ -48,10 +34,10 @@ class WinCmd:
         pattern = r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
         try:
             cmd = self.BASH_EXE + ' -c "ifconfig eth0 | grep \'inet \'"'
-            result = popen(cmd).read().strip()
+            result = self.read_cmd(cmd)
             wsl_ip = search(pattern, result).group(0)
         except AttributeError:
-            wsl_ip = 'IP查询失败'
+            wsl_ip = ''
         return wsl_ip
 
     def start_wsl(self):
@@ -61,7 +47,7 @@ class WinCmd:
         """
         cmd = self.WSCRIPT_EXE
         cmd += ' ' + self.WSL_BAT_PATH + ' wsl'
-        return popen(cmd)
+        return self.read_cmd(cmd)
 
     def port_add(self, wsl_ip, wsl_port, addr='0.0.0.0'):
         """
@@ -77,7 +63,7 @@ class WinCmd:
         cmd += ' listenaddress=' + addr
         cmd += ' connectport=' + wsl_port
         cmd += ' connectaddress=' + wsl_ip
-        return popen(cmd)
+        return self.read_cmd(cmd)
 
     def port_del(self, wsl_port, addr='0.0.0.0'):
         """
@@ -88,7 +74,7 @@ class WinCmd:
         """
         cmd = self.POWER_SHELL
         cmd += ' netsh interface portproxy delete v4tov4 listenport=' + wsl_port + ' listenaddress=' + addr
-        return popen(cmd)
+        return self.read_cmd(cmd)
 
     def port_reset(self):
         """
@@ -97,7 +83,7 @@ class WinCmd:
         """
         cmd = self.POWER_SHELL
         cmd += ' netsh interface portproxy reset'
-        return popen(cmd)
+        return self.read_cmd(cmd)
 
     def port_info(self, is_str=False):
         """
@@ -106,10 +92,10 @@ class WinCmd:
         """
         cmd = self.POWER_SHELL
         cmd += ' netsh interface portproxy show all'
-        info_str = popen(cmd).read()
+        info_str = self.read_cmd(cmd)
         if is_str:
             return info_str
-        return port_info_to_list(info_str)
+        return self.port_info_to_list(info_str)
 
     def fire_wall_rule_add(self, wsl_port, wall_type):
         """
@@ -124,7 +110,7 @@ class WinCmd:
         cmd += " New-NetFireWallRule -DisplayName '" + wall_name + "'"
         cmd += " -Direction '" + wall_type + "'"
         cmd += " -LocalPort " + wsl_port + " -Action Allow -Protocol TCP"
-        return popen(cmd)
+        return self.read_cmd(cmd)
 
     def fire_wall_rule_del(self, wsl_port, wall_type):
         """
@@ -136,7 +122,7 @@ class WinCmd:
         wall_name = self.FireWallRuleDisplayName + wall_type + wsl_port
         cmd = self.POWER_SHELL
         cmd += " Remove-NetFireWallRule -DisplayName '" + wall_name + "'"
-        return popen(cmd)
+        return self.read_cmd(cmd)
 
     def save_bat_script(self, content):
         f = open(join(self.scriptDir, 'script/wsl.bat'), 'w', encoding='utf8')
@@ -148,3 +134,34 @@ class WinCmd:
         content = f.read()
         f.close()
         return content
+
+    @staticmethod
+    def read_cmd(cmd):
+        """
+        执行命令，并返回输出结果
+        :param cmd:
+        :return:
+        """
+        f = popen(cmd)
+        result = f.read().strip()
+        f.close()
+        return result
+
+    @staticmethod
+    def port_info_to_list(info_str):
+        """
+        格式化话端口信息
+        :param info_str:
+        :return: 以字典形式返回
+        """
+        info = []
+        pattern = r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(.*?)(\d+)(.*?)(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})"
+        for line in info_str.splitlines():
+            line_info = search(pattern, line)
+            if line_info:
+                info.append({
+                    'addr': line_info.group(1),
+                    'port': line_info.group(3),
+                    'ip': line_info.group(5),
+                })
+        return info
