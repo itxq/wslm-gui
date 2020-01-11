@@ -10,13 +10,13 @@
     <x>0</x>
     <y>0</y>
     <width>733</width>
-    <height>480</height>
+    <height>542</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>733</width>
-    <height>480</height>
+    <height>542</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -47,7 +47,7 @@
       <attribute name="title">
        <string>端口转发</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
@@ -276,6 +276,44 @@ border-radius: 100px;</string>
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="save_settings_ports">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">height: 38px;
+alternate-background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0.05 rgba(14, 8, 73, 255), stop:0.36 rgba(28, 17, 145, 255), stop:0.6 rgba(126, 14, 81, 255), stop:0.75 rgba(234, 11, 11, 255), stop:0.79 rgba(244, 70, 5, 255), stop:0.86 rgba(255, 136, 0, 255), stop:0.935 rgba(239, 236, 55, 255));
+selection-background-color: qradialgradient(spread:repeat, cx:0.5, cy:0.5, radius:0.077, fx:0.5, fy:0.5, stop:0 rgba(0, 169, 255, 147), stop:0.497326 rgba(0, 0, 0, 147), stop:1 rgba(0, 169, 255, 147));
+line-height: 38px;
+padding: 0 18px;
+background-color: #009688;
+color: #fff;
+white-space: nowrap;
+text-align: center;
+font-size: 14px;
+border: none;
+border-radius: 2px;
+cursor: pointer;
+border-radius: 100px;</string>
+           </property>
+           <property name="text">
+            <string>保存端口转发配置信息</string>
+           </property>
+           <property name="default">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
@@ -376,13 +414,6 @@ font: 75 12pt &quot;Agency FB&quot;;</string>
            </property>
            <property name="placeholderText">
             <string>此处填写启动脚本内容</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="line_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
