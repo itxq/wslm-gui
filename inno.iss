@@ -2,7 +2,7 @@
 ; 有关创建 Inno Setup 脚本文件的详细资料请查阅帮助文档！
 
 #define MyAppName "WSL2端口自动转发工具"
-#define MyAppVersion "2.0.0"
+#define MyAppVersion "2.0.1"
 #define MyAppPublisher "IT小强xqitw.cn"
 #define MyAppURL "https://www.xqitw.cn/"
 #define MyAppExeName "WSL2AutoPortForward.exe"
