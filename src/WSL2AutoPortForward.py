@@ -6,7 +6,7 @@
 #       修改时间: 
 #       copyright (c) 2016 - 2019 mail@xqitw.cn
 # ==================================================================
-from subprocess import Popen
+from subprocess import Popen, PIPE
 
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
@@ -227,7 +227,8 @@ class WSL2AutoPortForward:
         :param cmd:
         :return:
         """
-        Popen(cmd, shell=True)
+        sub = Popen(cmd, shell=True, stdout=PIPE)
+        return sub
 
 
 if __name__ == "__main__":
