@@ -6,6 +6,8 @@
 #       修改时间: 
 #       copyright (c) 2016 - 2019 mail@xqitw.cn
 # ==================================================================
+from os.path import isfile
+
 from subprocess import Popen, PIPE
 
 from PySide2.QtGui import QIcon
@@ -30,6 +32,12 @@ class WSL2AutoPortForward:
         # 实例化windows命令处理类
         self.wsl2 = WinCmd()
 
+        # 初始化启动脚本
+        if not isfile(self.wsl2.WSL_BAT_PATH):
+            self.settings_manage.save_file_content(
+                self.wsl2.WSL_BAT_PATH,
+                self.__setting.get('wsl_bat_content', '')
+            )
         # 加载UI文件
         self.ui = QUiLoader().load('lib/wsl2.ui')
 
@@ -154,6 +162,7 @@ class WSL2AutoPortForward:
         :return:
         """
         content = self.ui.bat_text.toPlainText()
+        self.settings_manage.set('wsl_bat_content', content)
         self.wsl2.save_bat_script(content)
 
     def __fire_wall_rule_add(self, port):
