@@ -6,9 +6,12 @@
 #       修改时间: 
 #       copyright (c) 2016 - 2019 mail@xqitw.cn
 # ==================================================================
+import multiprocessing
+
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QMessageBox
+
 from SettingsManage import SettingsManage
 from WinCmd import WinCmd
 
@@ -18,7 +21,9 @@ class WSL2AutoPortForward:
     WSL2 端口自动转发
     """
 
-    def __init__(self):
+    def __init__(self, qt_application):
+        self.qt_application = qt_application
+        self.receiver, self.sender = multiprocessing.Pipe(duplex=False)
         # 实例化配置管理类
         self.settings_manage = SettingsManage()
         self.__setting = self.settings_manage.get()
@@ -74,13 +79,7 @@ class WSL2AutoPortForward:
             for port in ports.splitlines():
                 if not port.strip():
                     continue
-                self.wsl2.port_add(wsl2_ip_info, port)
-                self.ui.result_text.appendPlainText('>>> 添加端口：【' + port + '】...')
-                if self.ui.fire_wall_open.isChecked():
-                    self.wsl2.fire_wall_rule_add(port, self.wsl2.FireWallRuleIn)
-                    self.ui.result_text.appendPlainText('>>> 添加防火墙：【' + port + '】【' + self.wsl2.FireWallRuleIn + '】...')
-                    self.wsl2.fire_wall_rule_add(port, self.wsl2.FireWallRuleOut)
-                    self.ui.result_text.appendPlainText('>>> 添加防火墙：【' + port + '】【' + self.wsl2.FireWallRuleOut + '】...')
+                self.__port_add_one(port, wsl2_ip_info)
             self.ui.result_text.appendPlainText('Succeed!')
 
     def __port_del(self):
@@ -107,13 +106,34 @@ class WSL2AutoPortForward:
         else:
             self.ui.result_text.setPlainText(info_str)
 
+    def __port_add_one(self, port, wsl2_ip_info):
+        # 添加端口
+        multiprocessing.Process(target=WinCmd.port_add, args=(wsl2_ip_info, port)).start()
+        self.ui.result_text.appendPlainText('>>> 添加端口：【' + port + '】...')
+        # 添加防火墙
+        if self.ui.fire_wall_open.isChecked():
+            multiprocessing.Process(target=WinCmd.fire_wall_rule_add, args=(port, self.wsl2.FireWallRuleIn)).start()
+            self.ui.result_text.appendPlainText('>>> 添加防火墙：【' + port + '】【' + self.wsl2.FireWallRuleIn + '】...')
+            multiprocessing.Process(target=WinCmd.fire_wall_rule_add, args=(port, self.wsl2.FireWallRuleOut)).start()
+            self.ui.result_text.appendPlainText(
+                '>>> 添加防火墙：【' + port + '】【' + self.wsl2.FireWallRuleOut + '】...')
+
     def __port_del_one(self, port):
-        self.wsl2.port_del(port)
+        """
+        删除单个端口
+        :param port:端口号
+        :return:
+        """
+
+        # 删除端口
+        multiprocessing.Process(target=WinCmd.port_del, args=(port,)).start()
         self.ui.result_text.appendPlainText('>>> 删除端口：【' + port + '】...')
+
+        # 删除防火墙
         if self.ui.fire_wall_close.isChecked():
-            self.wsl2.fire_wall_rule_del(port, self.wsl2.FireWallRuleIn)
+            multiprocessing.Process(target=WinCmd.fire_wall_rule_del, args=(port, self.wsl2.FireWallRuleIn)).start()
             self.ui.result_text.appendPlainText('>>> 删除防火墙：【' + port + '】【' + self.wsl2.FireWallRuleIn + '】...')
-            self.wsl2.fire_wall_rule_del(port, self.wsl2.FireWallRuleOut)
+            multiprocessing.Process(target=WinCmd.fire_wall_rule_del, args=(port, self.wsl2.FireWallRuleOut)).start()
             self.ui.result_text.appendPlainText('>>> 删除防火墙：【' + port + '】【' + self.wsl2.FireWallRuleOut + '】...')
 
     def __wsl2_auto_port_forward(self):
@@ -161,6 +181,6 @@ class WSL2AutoPortForward:
 
 if __name__ == "__main__":
     app = QApplication([])
-    wsl2_auto_port_forward = WSL2AutoPortForward()
+    wsl2_auto_port_forward = WSL2AutoPortForward(app)
     wsl2_auto_port_forward.ui.show()
     app.exec_()
