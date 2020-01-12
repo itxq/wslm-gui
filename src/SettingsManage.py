@@ -20,7 +20,9 @@ class SettingsManage:
         'auto_start_wsl': False,
         'fire_wall_open': False,
         'fire_wall_close': False,
-        'ports': []
+        'ports': [],
+        'wsl_bat_content': r"""@echo off
+wsl.exe -u root"""
     }
 
     def __init__(self):
@@ -38,7 +40,7 @@ class SettingsManage:
         @param value: 配置值
         """
         self.__settings[name] = value
-        self.__save_file_content()
+        self.save_file_content(self.settingsFile, dumps(self.__settings))
 
     def get(self, name=None, default_value=None):
         """
@@ -70,10 +72,11 @@ class SettingsManage:
         # 转为json
         self.__settings.update(loads(content))
 
-    def __save_file_content(self):
+    @staticmethod
+    def save_file_content(file, content):
         """
         保存配置到json文件
         """
-        f = open(self.settingsFile, 'w', encoding='utf8')
-        f.write(dumps(self.__settings))
+        f = open(file, 'w', encoding='utf8')
+        f.write(content)
         f.close()
