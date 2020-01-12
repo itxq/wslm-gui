@@ -12,7 +12,7 @@ from subprocess import Popen, PIPE
 
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QApplication, QMessageBox
+from PySide2.QtWidgets import QApplication, QMessageBox, QAction, QSystemTrayIcon, QMenu
 
 from SettingsManage import SettingsManage
 from WinCmd import WinCmd
@@ -65,6 +65,57 @@ class WSL2AutoPortForward:
 
         if self.ui.auto_start_wsl.isChecked():
             self.__start_wsl()
+
+        # 设置系统托盘图标的菜单
+        self.tp = QSystemTrayIcon(self.ui)
+        self.tp.setIcon(QIcon("lib/logo.ico"))
+
+        self.ui_hide = QAction('隐藏(Hide)', triggered=self.ui.hide)
+        self.ui_show = QAction('显示(Show)', triggered=self.ui.show)
+        self.ui_exit = QAction('退出(Exit)', triggered=self.quit_app)
+        self.tp_menu = QMenu()
+        self.tp_menu.addAction(self.ui_hide)
+        self.tp_menu.addAction(self.ui_show)
+        self.tp_menu.addAction(self.ui_exit)
+        self.tp.setContextMenu(self.tp_menu)
+        self.tp.activated.connect(self.tp_connect_action)
+
+    def tp_connect_action(self, activation_reason):
+        """
+        监听托盘图标点击
+        :param activation_reason: 点击类型
+        :return:
+        """
+        if activation_reason == QSystemTrayIcon.ActivationReason.Trigger:
+            # 左单击
+            self.ui.show()
+        elif activation_reason == QSystemTrayIcon.ActivationReason.Context:
+            # 右单击
+            self.tp_menu.show()
+        elif activation_reason == QSystemTrayIcon.ActivationReason.DoubleClick:
+            # 双击
+            self.ui.show()
+
+    def quit_app(self):
+        """
+        退出APP
+        :return:
+        """
+        re = QMessageBox.question(
+            self.ui,
+            "提示",
+            "退出系统",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No
+        )
+        if re == QMessageBox.Yes:
+            # 关闭窗体程序
+            self.qt_application.quit()
+            # 在应用程序全部关闭后，TrayIcon其实还不会自动消失，
+            # 直到你的鼠标移动到上面去后，才会消失，
+            # 这是个问题，（如同你terminate一些带TrayIcon的应用程序时出现的状况），
+            # 这种问题的解决我是通过在程序退出前将其setVisible(False)来完成的。
+            self.tp.setVisible(False)
 
     def __get_wsl2_ip(self):
         wsl2_ip_info = self.wsl2.get_wsl2_ip()
@@ -244,4 +295,10 @@ if __name__ == "__main__":
     app = QApplication([])
     wsl2_auto_port_forward = WSL2AutoPortForward(app)
     wsl2_auto_port_forward.ui.show()
+    wsl2_auto_port_forward.tp.show()
+    wsl2_auto_port_forward.tp.showMessage(
+        'WSL2AutoPortForward',
+        'WSL2端口自动转发工具已启动',
+        QSystemTrayIcon.MessageIcon.Information
+    )
     app.exec_()
