@@ -18,7 +18,8 @@ class WinCmd:
     SCRIPT_DIR = dirname(abspath(__file__))
     BASH_EXE = 'bash.exe'
     WSCRIPT_EXE = r'C:\Windows\System32\wscript.exe'
-    WSL_BAT_PATH = join(SCRIPT_DIR, 'script/wsl.vbs')
+    WSL_VBS_PATH = join(SCRIPT_DIR, 'script/wsl.vbs')
+    WSL_BAT_PATH = join(SCRIPT_DIR, 'script/wsl.bat')
     POWER_SHELL = 'PowerShell.exe'
     FireWallRuleOut = 'Outbound'
     FireWallRuleIn = 'Inbound'
@@ -49,7 +50,7 @@ class WinCmd:
         :return:
         """
         cmd = cls.WSCRIPT_EXE
-        cmd += ' ' + cls.WSL_BAT_PATH + ' wsl'
+        cmd += ' ' + cls.WSL_VBS_PATH + ' wsl'
         return cls.read_cmd(cmd, exec_run)
 
     @classmethod
