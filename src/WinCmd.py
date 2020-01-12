@@ -10,6 +10,8 @@ from os.path import abspath, dirname, join
 from os import popen
 from re import search
 
+from SettingsManage import SettingsManage
+
 
 class WinCmd:
     """
@@ -142,9 +144,7 @@ class WinCmd:
 
     @classmethod
     def save_bat_script(cls, content):
-        f = open(join(cls.SCRIPT_DIR, 'script/wsl.bat'), 'w', encoding='utf8')
-        f.write(content)
-        f.close()
+        SettingsManage.save_file_content(cls.WSL_BAT_PATH, content)
 
     @classmethod
     def get_bat_script(cls):
