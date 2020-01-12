@@ -1,6 +1,6 @@
 # ==================================================================
 #       文 件 名: WinCmd.py
-#       概    要: 
+#       概    要: WSL2 端口转发处理类
 #       作    者: IT小强 
 #       创建时间: 2019/12/22 9:48
 #       修改时间: 
@@ -119,7 +119,7 @@ class WinCmd:
         :return:
         """
         "New-NetFireWallRule -DisplayName 'test1008611' -Direction 'Inbound' -Action Allow -Protocol TCP"
-        wall_name = cls.FireWallRuleDisplayName + wall_type + wsl_port
+        wall_name = cls.FireWallRuleDisplayName + '-' + wall_type
         cmd = cls.POWER_SHELL
         cmd += " New-NetFireWallRule -DisplayName '" + wall_name + "'"
         cmd += " -Direction '" + wall_type + "'"
@@ -127,15 +127,14 @@ class WinCmd:
         return cls.read_cmd(cmd, exec_run)
 
     @classmethod
-    def fire_wall_rule_del(cls, wsl_port, wall_type, exec_run=True):
+    def fire_wall_rule_del(cls, wall_type, exec_run=True):
         """
         删除防火墙规则
         :param exec_run:
-        :param wsl_port: str 端口号
         :param wall_type: str 防火墙类型 Outbound | Inbound
         :return:
         """
-        wall_name = cls.FireWallRuleDisplayName + wall_type + wsl_port
+        wall_name = cls.FireWallRuleDisplayName + '-' + wall_type
         cmd = cls.POWER_SHELL
         cmd += " Remove-NetFireWallRule -DisplayName '" + wall_name + "'"
         return cls.read_cmd(cmd, exec_run)
