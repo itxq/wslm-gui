@@ -6,23 +6,23 @@
 #       修改时间: 
 #       copyright (c) 2016 - 2019 mail@xqitw.cn
 # ==================================================================
-from os.path import abspath, dirname, join
+from os.path import join
 from os import popen
 from re import search
 
 from SettingsManage import SettingsManage
+from ResourcePath import ResourcePath
 
 
 class WinCmd:
     """
     WSL2 端口转发处理类
     """
-    SCRIPT_DIR = dirname(abspath(__file__))
-    BASH_EXE = 'bash.exe'
+    BASH_EXE = r'C:\Windows\System32\bash.exe'
     WSCRIPT_EXE = r'C:\Windows\System32\wscript.exe'
-    WSL_VBS_PATH = join(SCRIPT_DIR, 'script/wsl.vbs')
-    WSL_BAT_PATH = join(SCRIPT_DIR, 'script/wsl.bat')
-    POWER_SHELL = 'PowerShell.exe'
+    WSL_VBS_PATH = ResourcePath.resource_path('script/wsl.vbs')
+    WSL_BAT_PATH = join(ResourcePath.create_settings_path(), 'wsl.bat')
+    POWER_SHELL = r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
     FireWallRuleOut = 'Outbound'
     FireWallRuleIn = 'Inbound'
     FireWallRuleDisplayName = 'WSL 2 Firewall Unlock'
@@ -148,7 +148,7 @@ class WinCmd:
 
     @classmethod
     def get_bat_script(cls):
-        f = open(join(cls.SCRIPT_DIR, 'script/wsl.bat'), 'r', encoding='utf8')
+        f = open(cls.WSL_BAT_PATH, 'r', encoding='utf8')
         content = f.read()
         f.close()
         return content
