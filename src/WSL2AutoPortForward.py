@@ -62,17 +62,19 @@ class WSL2AutoPortForward:
         self.ui.port_reset.clicked.connect(self.__port_reset)
         self.ui.start_wsl.clicked.connect(self.__start_wsl)
         self.ui.save_settings.clicked.connect(self.__save_settings)
+        self.ui.save_settings_ports.clicked.connect(self.__save_settings)
 
         if self.ui.auto_start_wsl.isChecked():
             self.__start_wsl()
 
         # 设置系统托盘图标的菜单
+        tp_icon = QIcon("lib/logo.ico")
         self.tp = QSystemTrayIcon(self.ui)
-        self.tp.setIcon(QIcon("lib/logo.ico"))
+        self.tp.setIcon(tp_icon)
 
-        self.ui_hide = QAction('隐藏(Hide)', triggered=self.ui.hide)
-        self.ui_show = QAction('显示(Show)', triggered=self.ui.show)
-        self.ui_exit = QAction('退出(Exit)', triggered=self.quit_app)
+        self.ui_hide = QAction(icon=tp_icon, text='隐藏(Hide)', triggered=self.ui.hide)
+        self.ui_show = QAction(icon=tp_icon, text='显示(Show)', triggered=self.ui.show)
+        self.ui_exit = QAction(icon=tp_icon, text='退出(Exit)', triggered=self.quit_app)
         self.tp_menu = QMenu()
         self.tp_menu.addAction(self.ui_hide)
         self.tp_menu.addAction(self.ui_show)
