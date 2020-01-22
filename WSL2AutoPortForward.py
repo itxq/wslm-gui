@@ -9,12 +9,11 @@
 from os.path import isfile
 from shutil import copyfile
 
-from subprocess import Popen, PIPE, STDOUT
-
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QMessageBox, QAction, QSystemTrayIcon, QMenu
 
+from QProcess import QProcess
 from ResourcePath import ResourcePath
 from SettingsManage import SettingsManage
 from WinCmd import WinCmd
@@ -291,10 +290,4 @@ class WSL2AutoPortForward:
 
     @staticmethod
     def start_qt_process(cmd):
-        """
-        开启子进程处理
-        :param cmd:
-        :return:
-        """
-        sub = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT, shell=True)
-        return sub
+        return QProcess.get_out_put(cmd)

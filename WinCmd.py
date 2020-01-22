@@ -7,9 +7,9 @@
 #       copyright (c) 2016 - 2019 mail@xqitw.cn
 # ==================================================================
 from os.path import join
-from os import popen
 from re import search
 
+from QProcess import QProcess
 from SettingsManage import SettingsManage
 from ResourcePath import ResourcePath
 
@@ -164,9 +164,7 @@ class WinCmd:
         """
         if not exec_run:
             return cmd
-        f = popen(cmd)
-        result = f.read().strip()
-        f.close()
+        result = QProcess.get_out_put(cmd)
         return result
 
     @staticmethod
