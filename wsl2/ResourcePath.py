@@ -45,7 +45,7 @@ class ResourcePath:
             # 并把路径存储在_MEIPASS中
             base_path = sys._MEIPASS
         else:
-            base_path = dirname(abspath(__file__))
+            base_path = dirname(dirname(abspath(__file__)))
         return join(base_path, relative_path)
 
     @classmethod

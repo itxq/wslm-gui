@@ -42,7 +42,6 @@ class WSL2AutoPortForward:
                 self.wsl2.WSL_BAT_PATH,
                 self.__setting.get('wsl_bat_content', '')
             )
-        print(ResourcePath.resource_path('lib/wsl2.ui'))
         # 加载UI文件
         self.ui = QUiLoader().load(ResourcePath.resource_path('lib/wsl2.ui'))
 
