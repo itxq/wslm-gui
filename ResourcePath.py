@@ -8,7 +8,7 @@
 # ==================================================================
 import sys
 from os import environ, mkdir
-from os.path import expanduser, expandvars, abspath, join, dirname
+from os.path import expanduser, expandvars, join
 from pathlib import Path
 
 
