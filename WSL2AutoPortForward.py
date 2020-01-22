@@ -174,7 +174,7 @@ class WSL2AutoPortForward:
         获取端口转发信息
         :return:
         """
-        info_str = self.wsl2.port_info(True)
+        info_str = self.wsl2.port_info(True).strip()
         if not info_str:
             # 未查询到端口转发信息提示
             info_str = '未查询到端口转发信息!'
