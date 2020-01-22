@@ -6,8 +6,11 @@
 #       修改时间: 
 #       copyright (c) 2016 - 2019 mail@xqitw.cn
 # ==================================================================
-from os.path import abspath, dirname, join, isfile
+
+from os.path import join, isfile
 from json import loads, dumps
+
+from WinCmd import create_settings_path
 
 
 class SettingsManage:
@@ -29,8 +32,8 @@ wsl.exe -u root"""
         """
         初始化
         """
-        self.settingsDir = dirname(abspath(__file__))
-        self.settingsFile = join(self.settingsDir, 'data/settings.json')
+        self.settingsDir = create_settings_path()
+        self.settingsFile = join(self.settingsDir, 'settings.json')
         self.__get_file_content()
 
     def set(self, name, value):
