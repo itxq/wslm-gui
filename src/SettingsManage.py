@@ -10,7 +10,7 @@
 from os.path import join, isfile
 from json import loads, dumps
 
-from WinCmd import create_settings_path
+from ResourcePath import ResourcePath
 
 
 class SettingsManage:
@@ -32,7 +32,7 @@ wsl.exe -u root"""
         """
         初始化
         """
-        self.settingsDir = create_settings_path()
+        self.settingsDir = ResourcePath.create_settings_path()
         self.settingsFile = join(self.settingsDir, 'settings.json')
         self.__get_file_content()
 
