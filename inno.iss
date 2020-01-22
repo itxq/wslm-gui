@@ -2,7 +2,7 @@
 ; 有关创建 Inno Setup 脚本文件的详细资料请查阅帮助文档！
 
 #define MyAppName "WSL2端口自动转发工具"
-#define MyAppVersion "2.0.1"
+#define MyAppVersion "2.0.2"
 #define MyAppPublisher "IT小强xqitw.cn"
 #define MyAppURL "https://www.xqitw.cn/"
 #define MyAppExeName "WSL2AutoPortForward.exe"
@@ -26,9 +26,9 @@ UsedUserAreasWarning=no
 ; 以下行取消注释，以在非管理安装模式下运行（仅为当前用户安装）。
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline
-OutputDir=D:\github\itxq\wsl2-auto-port-forward-python\dist
+OutputDir=D:\code\github.com\itxq\wsl2-auto-port-forward-python\dist
 OutputBaseFilename=WSL2端口自动转发工具安装器
-SetupIconFile=D:\github\itxq\wsl2-auto-port-forward-python\src\dist\WSL2AutoPortForward\lib\logo.ico
+SetupIconFile=D:\code\github.com\itxq\wsl2-auto-port-forward-python\src\dist\WSL2AutoPortForward\lib\logo.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -42,8 +42,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 6.1; Check: not IsAdminInstallMode
 
 [Files]
-Source: "D:\github\itxq\wsl2-auto-port-forward-python\src\dist\WSL2AutoPortForward\WSL2AutoPortForward.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\github\itxq\wsl2-auto-port-forward-python\src\dist\WSL2AutoPortForward\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\code\github.com\itxq\wsl2-auto-port-forward-python\src\dist\WSL2AutoPortForward\WSL2AutoPortForward.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\code\github.com\itxq\wsl2-auto-port-forward-python\src\dist\WSL2AutoPortForward\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; 注意: 不要在任何共享系统文件上使用“Flags: ignoreversion”
 
 [Icons]
