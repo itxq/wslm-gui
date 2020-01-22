@@ -6,11 +6,10 @@
 #       修改时间: 
 #       copyright (c) 2016 - 2019 mail@xqitw.cn
 # ==================================================================
-
 from os.path import join, isfile
 from json import loads, dumps
 
-from ResourcePath import ResourcePath
+from wsl2.ResourcePath import ResourcePath
 
 
 class SettingsManage:

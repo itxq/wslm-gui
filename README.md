@@ -3,7 +3,7 @@
 ### 打包
 
 ```
-pyinstaller WSL2AutoPortForward.py -F --noconsole --hidden-import PySide2.QtXml --icon="lib/logo.ico" --add-data="lib\logo.ico;lib" --add-data="lib\wsl2.ui;lib" --add-data="lib\wsl.vbs;lib"
+pyinstaller wsl2.py -F --noconsole --hidden-import PySide2.QtXml --icon="lib/logo.ico" --add-data="lib\logo.ico;lib" --add-data="lib\wsl2.ui;lib" --add-data="lib\wsl.vbs;lib"
 ```
 
 ### 界面

@@ -13,11 +13,11 @@ from subprocess import Popen, PIPE, STDOUT
 
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QApplication, QMessageBox, QAction, QSystemTrayIcon, QMenu
+from PySide2.QtWidgets import QMessageBox, QAction, QSystemTrayIcon, QMenu
 
-from ResourcePath import ResourcePath
-from SettingsManage import SettingsManage
-from WinCmd import WinCmd
+from wsl2.ResourcePath import ResourcePath
+from wsl2.SettingsManage import SettingsManage
+from wsl2.WinCmd import WinCmd
 
 
 class WSL2AutoPortForward:
@@ -299,16 +299,3 @@ class WSL2AutoPortForward:
         """
         sub = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT, shell=True)
         return sub
-
-
-if __name__ == "__main__":
-    app = QApplication([])
-    wsl2_auto_port_forward = WSL2AutoPortForward(app)
-    wsl2_auto_port_forward.ui.show()
-    wsl2_auto_port_forward.tp.show()
-    wsl2_auto_port_forward.tp.showMessage(
-        'WSL2AutoPortForward',
-        'WSL2端口自动转发工具已启动',
-        QSystemTrayIcon.MessageIcon.Information
-    )
-    app.exec_()

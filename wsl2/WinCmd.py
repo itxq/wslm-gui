@@ -6,13 +6,12 @@
 #       修改时间: 
 #       copyright (c) 2016 - 2019 mail@xqitw.cn
 # ==================================================================
-from os.path import join, isfile
+from os.path import join
 from os import popen
 from re import search
-from shutil import copyfile
 
-from SettingsManage import SettingsManage
-from ResourcePath import ResourcePath
+from wsl2.SettingsManage import SettingsManage
+from wsl2.ResourcePath import ResourcePath
 
 
 class WinCmd:
