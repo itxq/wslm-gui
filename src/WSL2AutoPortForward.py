@@ -8,12 +8,13 @@
 # ==================================================================
 from os.path import isfile
 
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
 
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QMessageBox, QAction, QSystemTrayIcon, QMenu
 
+from ResourcePath import ResourcePath
 from SettingsManage import SettingsManage
 from WinCmd import WinCmd
 
@@ -38,11 +39,12 @@ class WSL2AutoPortForward:
                 self.wsl2.WSL_BAT_PATH,
                 self.__setting.get('wsl_bat_content', '')
             )
+        print(ResourcePath.resource_path('lib/wsl2.ui'))
         # 加载UI文件
-        self.ui = QUiLoader().load('lib/wsl2.ui')
+        self.ui = QUiLoader().load(ResourcePath.resource_path('lib/wsl2.ui'))
 
         # 设置界面图标
-        app_icon = QIcon("lib/logo.ico")
+        app_icon = QIcon(ResourcePath.resource_path("lib/logo.ico"))
         self.ui.setWindowIcon(app_icon)
 
         # 设置选中状态
@@ -68,7 +70,7 @@ class WSL2AutoPortForward:
             self.__start_wsl()
 
         # 设置系统托盘图标的菜单
-        tp_icon = QIcon("lib/logo.ico")
+        tp_icon = QIcon(ResourcePath.resource_path("lib/logo.ico"))
         self.tp = QSystemTrayIcon(self.ui)
         self.tp.setIcon(tp_icon)
 
@@ -292,7 +294,7 @@ class WSL2AutoPortForward:
         :param cmd:
         :return:
         """
-        sub = Popen(cmd, shell=True, stdout=PIPE)
+        sub = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT, shell=True)
         return sub
 
 
