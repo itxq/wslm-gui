@@ -18,12 +18,12 @@ class WinCmd:
     """
     WSL2 端口转发处理类
     """
-    BASH_EXE = r'C:\Windows\System32\bash.exe'
-    WSCRIPT_EXE = r'C:\Windows\System32\wscript.exe'
+    BASH_EXE = r'bash.exe'
+    WSCRIPT_EXE = r'wscript.exe'
     WSL_VBS_PATH_TEMP = ResourcePath.resource_path('lib/wsl.vbs')
     WSL_VBS_PATH = join(ResourcePath.create_settings_path(), 'wsl.vbs')
     WSL_BAT_PATH = join(ResourcePath.create_settings_path(), 'wsl.bat')
-    POWER_SHELL = r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+    POWER_SHELL = r'PowerShell.exe'
     FireWallRuleOut = 'Outbound'
     FireWallRuleIn = 'Inbound'
     FireWallRuleDisplayName = 'WSL 2 Firewall Unlock'
