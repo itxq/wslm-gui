@@ -90,7 +90,10 @@ class WSL2AutoPortForward:
         """
         if activation_reason == QSystemTrayIcon.ActivationReason.Trigger:
             # 左单击
-            self.ui.show()
+            if self.ui.isHidden():
+                self.ui.show()
+            else:
+                self.ui.hide()
         elif activation_reason == QSystemTrayIcon.ActivationReason.Context:
             # 右单击
             self.tp_menu.show()
