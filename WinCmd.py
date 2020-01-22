@@ -10,8 +10,8 @@ from os.path import join
 from os import popen
 from re import search
 
-from wsl2.SettingsManage import SettingsManage
-from wsl2.ResourcePath import ResourcePath
+from SettingsManage import SettingsManage
+from ResourcePath import ResourcePath
 
 
 class WinCmd:

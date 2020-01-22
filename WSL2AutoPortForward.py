@@ -15,9 +15,9 @@ from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QMessageBox, QAction, QSystemTrayIcon, QMenu
 
-from wsl2.ResourcePath import ResourcePath
-from wsl2.SettingsManage import SettingsManage
-from wsl2.WinCmd import WinCmd
+from ResourcePath import ResourcePath
+from SettingsManage import SettingsManage
+from WinCmd import WinCmd
 
 
 class WSL2AutoPortForward:

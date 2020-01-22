@@ -9,7 +9,7 @@
 from os.path import join, isfile
 from json import loads, dumps
 
-from wsl2.ResourcePath import ResourcePath
+from ResourcePath import ResourcePath
 
 
 class SettingsManage:

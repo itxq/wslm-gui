@@ -8,7 +8,7 @@
 # ==================================================================
 from PySide2.QtWidgets import QApplication, QSystemTrayIcon
 
-from wsl2.WSL2AutoPortForward import WSL2AutoPortForward
+from WSL2AutoPortForward import WSL2AutoPortForward
 
 if __name__ == "__main__":
     app = QApplication([])
