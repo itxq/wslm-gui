@@ -6,6 +6,8 @@
 #       修改时间: 
 #       copyright (c) 2016 - 2020 mail@xqitw.cn
 # ==================================================================
+from sys import exit
+
 from PySide2.QtWidgets import QApplication, QSystemTrayIcon
 
 from WSL2AutoPortForward import WSL2AutoPortForward
@@ -20,4 +22,4 @@ if __name__ == "__main__":
         'WSL2端口自动转发工具已启动',
         QSystemTrayIcon.MessageIcon.Information
     )
-    app.exec_()
+    exit(app.exec_())
