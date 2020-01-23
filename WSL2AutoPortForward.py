@@ -12,8 +12,8 @@ from shutil import copyfile
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QMessageBox, QAction, QSystemTrayIcon, QMenu
+from PySide2.QtCore import QProcess
 
-from QProcess import QProcess
 from ResourcePath import ResourcePath
 from SettingsManage import SettingsManage
 from WinCmd import WinCmd
@@ -195,7 +195,7 @@ class WSL2AutoPortForward:
         启动wsl
         :return:
         """
-        self.wsl2.start_wsl()
+        self.start_qt_process(self.wsl2.start_wsl(exec_run=False))
         self.__wsl2_auto_port_forward()
 
     def __save_settings(self):
@@ -288,6 +288,14 @@ class WSL2AutoPortForward:
         self.start_qt_process(self.wsl2.port_del(wsl_port=port, exec_run=False))
         self.ui.result_text.appendPlainText('>>> 删除端口：【' + port + '】...')
 
-    @staticmethod
-    def start_qt_process(cmd):
-        return QProcess.get_out_put(cmd)
+    def start_qt_process(self, cmd):
+        """
+        启动子进程执行耗时命令
+        :param cmd:
+        :return:
+        """
+        process = QProcess(self.ui)
+        process.start(cmd)
+        result = process.waitForStarted()
+        print(result)
+        return result
