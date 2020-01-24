@@ -30,6 +30,16 @@ class WinCmd:
     FireWallRuleDisplayName = 'WSL 2 Firewall Unlock'
 
     @classmethod
+    def wsl_l_v(cls, exec_run=True):
+        """
+        查询wsl信息
+        :return:
+        """
+        cmd = cls.WSL_EXE
+        cmd += ' -l -v'
+        return cls.read_cmd(cmd, exec_run)
+
+    @classmethod
     def get_wsl2_ip(cls, exec_run=True):
         """
         该方法用于获取WSL2的IP

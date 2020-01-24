@@ -62,6 +62,7 @@ class WSL2AutoPortForward:
         self.ui.port_add.clicked.connect(self.__port_add)
         self.ui.port_del.clicked.connect(self.__port_del)
         self.ui.port_info.clicked.connect(self.__port_info)
+        self.ui.wsl_l_v.clicked.connect(self.__wsl_l_v)
         self.ui.port_reset.clicked.connect(self.__port_reset)
         self.ui.end_wsl.clicked.connect(self.__end_wsl)
         self.ui.start_wsl.clicked.connect(self.__start_wsl)
@@ -127,6 +128,18 @@ class WSL2AutoPortForward:
             # 这种问题的解决我是通过在程序退出前将其setVisible(False)来完成的。
             self.tp.setVisible(False)
 
+    def __wsl_l_v(self):
+        """
+        获取wsl信息
+        :return:
+        """
+        wsl_l_v_txt = '  '+self.wsl2.wsl_l_v(exec_run=True).replace('\x00', '').strip()
+        if not wsl_l_v_txt:
+            # 未查询到wsl信息提示
+            wsl_l_v_txt = '未查询到wsl信息!'
+            QMessageBox.information(self.ui, '系统提示', wsl_l_v_txt)
+        self.ui.wsl_l_v_text.setPlainText(wsl_l_v_txt)
+
     def __get_wsl2_ip(self):
         wsl2_ip_info = self.wsl2.get_wsl2_ip()
         if not wsl2_ip_info:
@@ -134,7 +147,7 @@ class WSL2AutoPortForward:
             QMessageBox.information(self.ui, '系统提示', '未查询到IP信息!')
         else:
             wsl2_ip_info = 'WSL2当前IP为：' + wsl2_ip_info
-            self.ui.result_text.setPlainText(wsl2_ip_info)
+            self.ui.wsl_l_v_text.setPlainText(wsl2_ip_info)
 
     def __port_add(self):
         wsl2_ip_info = self.wsl2.get_wsl2_ip()
