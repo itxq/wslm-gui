@@ -64,6 +64,7 @@ class WSL2AutoPortForward:
         self.ui.port_info.clicked.connect(self.__port_info)
         self.ui.port_reset.clicked.connect(self.__port_reset)
         self.ui.start_wsl.clicked.connect(self.__start_wsl)
+        self.ui.start_wsl_all.clicked.connect(self.__start_wsl_all)
         self.ui.save_settings.clicked.connect(self.__save_settings)
         self.ui.save_settings_ports.clicked.connect(self.__save_settings)
 
@@ -196,6 +197,13 @@ class WSL2AutoPortForward:
         :return:
         """
         self.start_qt_process(self.wsl2.start_wsl(exec_run=False))
+
+    def __start_wsl_all(self):
+        """
+        启动wsl并转发端口
+        :return:
+        """
+        self.__start_wsl()
         self.__wsl2_auto_port_forward()
 
     def __save_settings(self):
