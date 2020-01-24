@@ -63,13 +63,14 @@ class WSL2AutoPortForward:
         self.ui.port_del.clicked.connect(self.__port_del)
         self.ui.port_info.clicked.connect(self.__port_info)
         self.ui.port_reset.clicked.connect(self.__port_reset)
+        self.ui.end_wsl.clicked.connect(self.__end_wsl)
         self.ui.start_wsl.clicked.connect(self.__start_wsl)
         self.ui.start_wsl_all.clicked.connect(self.__start_wsl_all)
         self.ui.save_settings.clicked.connect(self.__save_settings)
         self.ui.save_settings_ports.clicked.connect(self.__save_settings)
 
         if self.ui.auto_start_wsl.isChecked():
-            self.__start_wsl()
+            self.__start_wsl_all()
 
         # 设置系统托盘图标的菜单
         tp_icon = QIcon(ResourcePath.resource_path("lib/logo.ico"))
@@ -190,6 +191,15 @@ class WSL2AutoPortForward:
 
         self.__port_del()
         self.__port_add()
+
+    def __end_wsl(self):
+        """
+        停止wsl
+        :return:
+        """
+        self.start_qt_process(self.wsl2.end_wsl(exec_run=False))
+        info_str = 'wsl 已全部停止'
+        QMessageBox.information(self.ui, '系统提示', info_str)
 
     def __start_wsl(self):
         """

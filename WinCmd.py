@@ -20,6 +20,7 @@ class WinCmd:
     """
     BASH_EXE = r'bash.exe'
     WSCRIPT_EXE = r'wscript.exe'
+    WSL_EXE = r'wsl.exe'
     WSL_VBS_PATH_TEMP = ResourcePath.resource_path('lib/wsl.vbs')
     WSL_VBS_PATH = join(ResourcePath.create_settings_path(), 'wsl.vbs')
     WSL_BAT_PATH = join(ResourcePath.create_settings_path(), 'wsl.bat')
@@ -54,6 +55,16 @@ class WinCmd:
         """
         cmd = cls.WSCRIPT_EXE
         cmd += ' ' + cls.WSL_VBS_PATH + ' wsl'
+        return cls.read_cmd(cmd, exec_run)
+
+    @classmethod
+    def end_wsl(cls, exec_run=True):
+        """
+        停止wsl子系统
+        :return:
+        """
+        cmd = cls.WSL_EXE
+        cmd += ' --shutdown'
         return cls.read_cmd(cmd, exec_run)
 
     @classmethod
