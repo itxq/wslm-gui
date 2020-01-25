@@ -1,5 +1,5 @@
 # ==================================================================
-#       文 件 名: WSL2AutoPortForward.py
+#       文 件 名: UI.py
 #       概    要: WSL2 端口自动转发
 #       作    者: IT小强 
 #       创建时间: 2019/12/22 9:51
@@ -19,12 +19,12 @@ from SettingsManage import SettingsManage
 from WinCmd import WinCmd
 
 
-class WSL2AutoPortForward:
+class UI:
     """
     WSL2 端口自动转发
     """
 
-    def __init__(self, qt_application):
+    def __init__(self, qt_application=None):
         self.qt_application = qt_application
         # 实例化配置管理类
         self.settings_manage = SettingsManage()
@@ -80,15 +80,15 @@ class WSL2AutoPortForward:
 
         self.ui_hide = QAction(icon=tp_icon, text='隐藏(Hide)', triggered=self.ui.hide)
         self.ui_show = QAction(icon=tp_icon, text='显示(Show)', triggered=self.ui.show)
-        self.ui_exit = QAction(icon=tp_icon, text='退出(Exit)', triggered=self.quit_app)
+        self.ui_exit = QAction(icon=tp_icon, text='退出(Exit)', triggered=self.__quit_app)
         self.tp_menu = QMenu()
         self.tp_menu.addAction(self.ui_hide)
         self.tp_menu.addAction(self.ui_show)
         self.tp_menu.addAction(self.ui_exit)
         self.tp.setContextMenu(self.tp_menu)
-        self.tp.activated.connect(self.tp_connect_action)
+        self.tp.activated.connect(self.__tp_connect_action)
 
-    def tp_connect_action(self, activation_reason):
+    def __tp_connect_action(self, activation_reason):
         """
         监听托盘图标点击
         :param activation_reason: 点击类型
@@ -107,7 +107,7 @@ class WSL2AutoPortForward:
             # 双击
             self.ui.show()
 
-    def quit_app(self):
+    def __quit_app(self):
         """
         退出APP
         :return:
@@ -133,7 +133,7 @@ class WSL2AutoPortForward:
         获取wsl信息
         :return:
         """
-        wsl_l_v_txt = '  '+self.wsl2.wsl_l_v(exec_run=True).replace('\x00', '').strip()
+        wsl_l_v_txt = '  ' + self.wsl2.wsl_l_v(exec_run=True).replace('\x00', '').strip()
         if not wsl_l_v_txt:
             # 未查询到wsl信息提示
             wsl_l_v_txt = '未查询到wsl信息!'
