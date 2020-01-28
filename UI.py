@@ -66,12 +66,9 @@ class UI:
         self.ui.port_reset.clicked.connect(self.__port_reset)
         self.ui.end_wsl.clicked.connect(self.__end_wsl)
         self.ui.start_wsl.clicked.connect(self.__start_wsl)
-        self.ui.start_wsl_all.clicked.connect(self.__start_wsl_all)
+        self.ui.start_wsl_all.clicked.connect(self.start_wsl_all)
         self.ui.save_settings.clicked.connect(self.__save_settings)
         self.ui.save_settings_ports.clicked.connect(self.__save_settings)
-
-        if self.ui.auto_start_wsl.isChecked():
-            self.__start_wsl_all()
 
         # 设置系统托盘图标的菜单
         tp_icon = QIcon(ResourcePath.resource_path("lib/logo.ico"))
@@ -87,6 +84,12 @@ class UI:
         self.tp_menu.addAction(self.ui_exit)
         self.tp.setContextMenu(self.tp_menu)
         self.tp.activated.connect(self.__tp_connect_action)
+        self.tp.show()
+        self.tp.showMessage(
+            'WSL2AutoPortForward',
+            'WSL2端口自动转发工具已启动',
+            QSystemTrayIcon.MessageIcon.Information
+        )
 
     def __tp_connect_action(self, activation_reason):
         """
@@ -221,7 +224,7 @@ class UI:
         """
         self.start_qt_process(self.wsl2.start_wsl(exec_run=False))
 
-    def __start_wsl_all(self):
+    def start_wsl_all(self):
         """
         启动wsl并转发端口
         :return:
@@ -328,5 +331,4 @@ class UI:
         process = QProcess(self.ui)
         process.start(cmd)
         result = process.waitForStarted()
-        print(result)
         return result
