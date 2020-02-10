@@ -169,14 +169,16 @@ class UI:
             self.__fire_wall_rule_add(port_str)
             self.ui.result_text.appendPlainText('Succeed!')
 
-    def __port_del(self):
+    def __port_del(self, del_port=True, del_fire=True):
         self.ui.result_text.clear()
         ports = self.ui.port_text.toPlainText()
-        for port in ports.splitlines():
-            if not port.strip():
-                continue
-            self.__port_del_one(port)
-        self.__fire_wall_rule_del()
+        if del_port:
+            for port in ports.splitlines():
+                if not port.strip():
+                    continue
+                self.__port_del_one(port)
+        if del_fire:
+            self.__fire_wall_rule_del()
         self.ui.result_text.appendPlainText('Succeed!')
 
     def __port_reset(self):
@@ -205,7 +207,7 @@ class UI:
         @return:
         """
 
-        self.__port_del()
+        self.__port_del(del_port=False, del_fire=True)
         self.__port_add()
 
     def __end_wsl(self):
